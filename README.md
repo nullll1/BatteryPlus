@@ -18,7 +18,11 @@ Battery Plus is a lightweight, privacy-first Android utility designed to give yo
 
 ## 🚀 Getting Started
 
-Install the pre-compiled APK directly on your device from the [Releases](../../releases) page of this repository.
+Get it from [Google Play](https://play.google.com/store/apps/details?id=in.sunilpaulmathew.batteryplus) or download and install the pre-compiled APK directly from the [Releases](../../releases) page of this repository.
+
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
+alt="Get it on Google Play"
+height="80">](https://play.google.com/store/apps/details?id=in.sunilpaulmathew.batteryplus)
 
 ---
 
