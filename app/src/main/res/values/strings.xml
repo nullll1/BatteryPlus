@@ -21,6 +21,9 @@
     <string name="battery_status_unspecified">Unspecified Failure</string>
     <string name="cancel">Cancel</string>
     <string name="capacity">Capacity</string>
+    <string name="capacity_design_input_message">Tap here to enter your phone\'s official design capacity in mAh (usually found in device specifications).</string>
+    <string name="capacity_design_input_title">Battery Design Capacity (mAh)</string>
+    <string name="capacity_design_summary">Your battery is currently holding %s of its original design capacity</string>
     <string name="capacity_summary">Shows the battery\'s capacity or energy storage level in milliampere-hours (mAh). It is calculated from the system\'s charge counter and battery level parameters, reflecting the absolute charge capacity rather than a percentage.</string>
     <string name="charging_summary">Estimates the remaining time until the battery reaches 100% capacity while plugged in. It is calculated dynamically by tracking positive percentage increments over elapsed time, using a rolling average formula (elapsedMs / increase) multiplied by the remaining percentage points to full.</string>
     <string name="charging_status_ac">AC: Wall Charging</string>
@@ -61,6 +64,7 @@
     <string name="status_analyzing">Analyzing…</string>
     <string name="stop">Stop</string>
     <string name="tap_to_full_metrics">Tap to view full metrics</string>
+    <string name="tap_to_modify_status">Tap to modify current value</string>
     <string name="technology">Technology</string>
     <string name="technology_summary">Identifies the internal chemical composition of your battery cell, such as Li-ion (Lithium-ion) or Li-poly. This is retrieved as a string straight from the system\'s hardware identification extras.</string>
     <string name="temperature">Temperature</string>

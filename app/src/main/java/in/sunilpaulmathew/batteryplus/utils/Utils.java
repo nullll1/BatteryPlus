@@ -43,6 +43,11 @@ public class Utils {
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
+    public static int getInt(String name, int defaults, Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getInt(name, defaults);
+    }
+
     public static long getLong(String name, long defaults, Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getLong(name, defaults);
@@ -59,6 +64,10 @@ public class Utils {
 
     public static void saveBoolean(String name, boolean value, Context context) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(name, value).apply();
+    }
+
+    public static void saveSInt(String name, int value, Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(name, value).apply();
     }
 
     public static void saveLong(String name, long value, Context context) {

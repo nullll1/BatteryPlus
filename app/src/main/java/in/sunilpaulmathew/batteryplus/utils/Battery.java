@@ -1,5 +1,6 @@
 package in.sunilpaulmathew.batteryplus.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.graphics.Typeface;
 import android.os.BatteryManager;
 import android.os.Build;
 
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -185,6 +187,19 @@ public class Battery {
             }
         } catch (Exception ignored) {}
         return -1;
+    }
+
+    public static double getDesignCapacity(Context context) {
+        try {
+            @SuppressLint("PrivateApi")
+            Class<?> powerProfileClass = Class.forName("com.android.internal.os.PowerProfile");
+            Object powerProfile = powerProfileClass.getConstructor(Context.class).newInstance(context);
+            Method getBatteryCapacity = powerProfileClass.getMethod("getAveragePower", String.class);
+            Double capacityDouble = (Double) getBatteryCapacity.invoke(powerProfile, "battery.capacity");
+            return capacityDouble != null && capacityDouble > 0 ? capacityDouble : -1;
+        } catch (Exception e) {
+            return  -1;
+        }
     }
 
     public static int getProgressColor(int percentValue, Context context) {

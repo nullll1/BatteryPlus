@@ -20,6 +20,8 @@ import java.util.List;
 import in.sunilpaulmathew.batteryplus.R;
 import in.sunilpaulmathew.batteryplus.serializables.StatusEntry;
 import in.sunilpaulmathew.batteryplus.serializables.DataEntry;
+import in.sunilpaulmathew.batteryplus.utils.Battery;
+import in.sunilpaulmathew.batteryplus.utils.Utils;
 import in.sunilpaulmathew.batteryplus.utils.XYPlot;
 import in.sunilpaulmathew.batteryplus.utils.Tracker;
 
@@ -91,6 +93,20 @@ public class InfoDialog extends BottomSheetDialog {
             dismiss();
         });
 
+        if (status.getText().toString().trim().equalsIgnoreCase(context.getString(R.string.capacity_design_input_message))
+                || Utils.getInt("designCapacity", (int) Math.round(Battery.getDesignCapacity(context)), context)
+                != (int) Math.round(Battery.getDesignCapacity(context))) {
+            status.setOnClickListener(v -> new InputValueDialog(R.drawable.ic_battery_full, context.getString(R.string.capacity_design_input_title), context) {
+                @Override
+                public void onValueEntered(int value) {
+                    if (value > 0) {
+                        Utils.saveSInt("designCapacity", value, context);
+                        refreshData();
+                    }
+                }
+            });
+        }
+
         cancel.setOnClickListener(v -> dismiss());
 
         updateRunnable = new Runnable() {
@@ -137,6 +153,19 @@ public class InfoDialog extends BottomSheetDialog {
                 } else {
                     status.setVisibility(GONE);
                 }
+            } else if (statusEntry.getIcon() == R.drawable.ic_battery_full) {
+                int design = Utils.getInt("designCapacity", (int) Math.round(Battery.getDesignCapacity(context)), context);
+                if (design > 0) {
+                    int actual = Integer.parseInt(statusEntry.getDescription().replace(" mAh", ""));
+                    int percentage = (actual * 100) / design;
+                    boolean valueEntered = design != (int) Math.round(Battery.getDesignCapacity(context));
+                    String statusTxt = context.getString(R.string.capacity_design_summary, percentage + "%") +
+                            (valueEntered ? " (" + context.getString(R.string.tap_to_modify_status) + ")" : "");
+                    status.setText(statusTxt);
+                } else {
+                    status.setText(context.getString(R.string.capacity_design_input_message));
+                }
+                status.setVisibility(VISIBLE);
             }
         } else {
             plotView.setVisibility(GONE);
