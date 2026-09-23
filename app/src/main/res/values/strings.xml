@@ -6,7 +6,7 @@
     <string name="battery_full_title">Battery Fully Charged</string>
     <string name="battery_level">Battery level</string>
     <string name="battery_low_summary">Connect charger to prevent device shutdown.</string>
-    <string name="battery_low_threshold">Low Battery Threshold</string>
+    <string name="battery_low_threshold">Low battery threshold</string>
     <string name="battery_low_threshold_description">Alerts when battery drops below %s. Tap here to modify.</string>
     <string name="battery_low_title">"Battery Low (%s)"</string>
     <string name="battery_not_found_message">No battery detected</string>
@@ -34,7 +34,7 @@
     <string name="copyright_text" translatable="false">Copyright: © 2026 sunilpaulmathew</string>
     <string name="current">Current</string>
     <string name="current_summary">Measures the electrical flow moving in or out of the battery in milliamperes (mA). Positive values indicate energy flowing in while charging, while negative values represent power consumption. This is queried directly from Android\'s system BatteryManager API.</string>
-    <string name="developer_contact">Contact Developer</string>
+    <string name="developer_contact">Contact developer</string>
     <string name="developer_contact_description">Need help or have feedback? Contact the developer</string>
     <string name="discharging">Discharging</string>
     <string name="discharging_summary">Estimates how long the battery will last before the device powers down completely. It is computed by tracking continuous percentage drops over elapsed time, smoothing the results with a rolling weight factor, and multiplying the current percentage by the consumption rate.</string>
