@@ -94,7 +94,7 @@ public class InfoDialog extends BottomSheetDialog {
         });
 
         if (status.getText().toString().trim().equalsIgnoreCase(context.getString(R.string.capacity_design_input_message))
-                || Battery.getDesignCapacityAsInt(context) != (int) Math.round(Battery.getDesignCapacity(context))) {
+                || statusEntry.getIcon() == R.drawable.ic_battery_full && Battery.getDesignCapacityAsInt(context) != (int) Math.round(Battery.getDesignCapacity(context))) {
             status.setOnClickListener(v -> new InputValueDialog(R.drawable.ic_battery_full, Battery.getDesignCapacityAsInt(context), context.getString(R.string.capacity_design_input_title), context) {
                 @Override
                 public void onValueEntered(int value) {
