@@ -66,7 +66,7 @@ public class Utils {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(name, value).apply();
     }
 
-    public static void saveSInt(String name, int value, Context context) {
+    public static void saveInt(String name, int value, Context context) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(name, value).apply();
     }
 

@@ -22,10 +22,12 @@ import java.util.List;
 import in.sunilpaulmathew.batteryplus.BuildConfig;
 import in.sunilpaulmathew.batteryplus.R;
 import in.sunilpaulmathew.batteryplus.adapters.SettingsAdapter;
+import in.sunilpaulmathew.batteryplus.dialogs.InputValueDialog;
 import in.sunilpaulmathew.batteryplus.dialogs.NotificationContentDialog;
 import in.sunilpaulmathew.batteryplus.dialogs.PolicyDialog;
 import in.sunilpaulmathew.batteryplus.serializables.SettingsEntry;
 import in.sunilpaulmathew.batteryplus.services.BatteryMonitorService;
+import in.sunilpaulmathew.batteryplus.utils.Battery;
 import in.sunilpaulmathew.batteryplus.utils.Utils;
 
 /*
@@ -50,13 +52,22 @@ public class SettingsActivity extends BaseActivity {
 
         adapter = new SettingsAdapter(getData(), id -> {
             switch (id) {
-                case 6:
+                case 7:
                     new PolicyDialog(this);
                     break;
-                case 4:
+                case 5:
                     Utils.saveBoolean("startOnBoot", !Utils.getBoolean("startOnBoot", false, this), this);
                     notifyChangesAndReturn();
                     adapter.updateData(getData());
+                    break;
+                case 4:
+                    new InputValueDialog(R.drawable.ic_battery_alert, Battery.getLowBatteryThreshold(this), getString(R.string.battery_low_threshold) + " (%)", this) {
+                        @Override
+                        public void onValueEntered(int value) {
+                            Utils.saveInt("battery_low_threshold", value, SettingsActivity.this);
+                            adapter.updateData(getData());
+                        }
+                    };
                     break;
                 case 3:
                     new NotificationContentDialog(this);
@@ -112,15 +123,16 @@ public class SettingsActivity extends BaseActivity {
         if (Utils.hasNotificationGranted(this) && Utils.getBoolean("showNotification", false, this)) {
             mData.add(new SettingsEntry(2, R.drawable.ic_notification, getString(R.string.notification_start), getString(R.string.notification_start_description), true, true));
             mData.add(new SettingsEntry(3, R.drawable.ic_tune, getString(R.string.notification_content), getString(R.string.notification_content_description)));
-            mData.add(new SettingsEntry(4, R.drawable.ic_on_boot, getString(R.string.start_on_boot), getString(R.string.start_on_boot_description), true, Utils.getBoolean("startOnBoot", false, this)));
+            mData.add(new SettingsEntry(4, R.drawable.ic_battery_alert, getString(R.string.battery_low_threshold), getString(R.string.battery_low_threshold_description, Battery.getLowBatteryThreshold(this) + "%")));
+            mData.add(new SettingsEntry(5, R.drawable.ic_on_boot, getString(R.string.start_on_boot), getString(R.string.start_on_boot_description), true, Utils.getBoolean("startOnBoot", false, this)));
         } else {
             mData.add(new SettingsEntry(2, R.drawable.ic_notification, getString(R.string.notification_start), getString(R.string.notification_start_description), true, false));
         }
 
         mData.add(new SettingsEntry(getString(R.string.miscellaneous)));
-        mData.add(new SettingsEntry(5, R.drawable.ic_github, getString(R.string.source_code), getString(R.string.source_code_description), "https://github.com/sunilpaulmathew/BatteryPlus"));
-        mData.add(new SettingsEntry(6, R.drawable.ic_privacy, getString(R.string.privacy_policy), getString(R.string.privacy_policy_description)));
-        mData.add(new SettingsEntry(7, R.drawable.ic_email, getString(R.string.developer_contact), getString(R.string.developer_contact_description), "mailto:smartpack.org@gmail.com"));
+        mData.add(new SettingsEntry(6, R.drawable.ic_github, getString(R.string.source_code), getString(R.string.source_code_description), "https://github.com/sunilpaulmathew/BatteryPlus"));
+        mData.add(new SettingsEntry(7, R.drawable.ic_privacy, getString(R.string.privacy_policy), getString(R.string.privacy_policy_description)));
+        mData.add(new SettingsEntry(8, R.drawable.ic_email, getString(R.string.developer_contact), getString(R.string.developer_contact_description), "mailto:smartpack.org@gmail.com"));
         return mData;
     }
 

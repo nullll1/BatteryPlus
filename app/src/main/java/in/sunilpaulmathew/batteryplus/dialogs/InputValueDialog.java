@@ -11,18 +11,14 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import in.sunilpaulmathew.batteryplus.R;
-import in.sunilpaulmathew.batteryplus.utils.Battery;
-import in.sunilpaulmathew.batteryplus.utils.Utils;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on Sept. 23, 2026
  */
 public abstract class InputValueDialog extends MaterialAlertDialogBuilder {
 
-    public InputValueDialog(int iconRes, String title, Context context) {
+    public InputValueDialog(int iconRes, int valueCurrent, String title, Context context) {
         super(context);
-
-        int currentValue = Utils.getInt("designCapacity", (int) Math.round(Battery.getDesignCapacity(context)), context);
 
         LinearLayoutCompat layout = new LinearLayoutCompat(context);
         layout.setPadding(75, 75, 75, 75);
@@ -32,8 +28,8 @@ public abstract class InputValueDialog extends MaterialAlertDialogBuilder {
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         editText.setSingleLine(true);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-        if (currentValue > 0) {
-            editText.setText(String.valueOf(currentValue));
+        if (valueCurrent > 0) {
+            editText.setText(String.valueOf(valueCurrent));
         }
         layout.addView(editText);
 
@@ -51,7 +47,7 @@ public abstract class InputValueDialog extends MaterialAlertDialogBuilder {
         setPositiveButton(R.string.apply, (dialog, id) -> {
             if (editText.getText() != null && !editText.getText().toString().trim().isEmpty()) {
                 int newValue = Integer.parseInt(editText.getText().toString().trim());
-                if (newValue != currentValue) {
+                if (newValue > 0 && newValue != valueCurrent) {
                     onValueEntered(newValue);
                 }
             }

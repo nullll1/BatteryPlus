@@ -94,13 +94,12 @@ public class InfoDialog extends BottomSheetDialog {
         });
 
         if (status.getText().toString().trim().equalsIgnoreCase(context.getString(R.string.capacity_design_input_message))
-                || Utils.getInt("designCapacity", (int) Math.round(Battery.getDesignCapacity(context)), context)
-                != (int) Math.round(Battery.getDesignCapacity(context))) {
-            status.setOnClickListener(v -> new InputValueDialog(R.drawable.ic_battery_full, context.getString(R.string.capacity_design_input_title), context) {
+                || Battery.getDesignCapacityAsInt(context) != (int) Math.round(Battery.getDesignCapacity(context))) {
+            status.setOnClickListener(v -> new InputValueDialog(R.drawable.ic_battery_full, Battery.getDesignCapacityAsInt(context), context.getString(R.string.capacity_design_input_title), context) {
                 @Override
                 public void onValueEntered(int value) {
                     if (value > 0) {
-                        Utils.saveSInt("designCapacity", value, context);
+                        Utils.saveInt("designCapacity", value, context);
                         refreshData();
                     }
                 }
@@ -154,7 +153,7 @@ public class InfoDialog extends BottomSheetDialog {
                     status.setVisibility(GONE);
                 }
             } else if (statusEntry.getIcon() == R.drawable.ic_battery_full) {
-                int design = Utils.getInt("designCapacity", (int) Math.round(Battery.getDesignCapacity(context)), context);
+                int design = Battery.getDesignCapacityAsInt(context);
                 if (design > 0) {
                     int actual = Integer.parseInt(statusEntry.getDescription().replace(" mAh", ""));
                     int percentage = (actual * 100) / design;

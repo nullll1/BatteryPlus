@@ -317,7 +317,7 @@ public class BatteryMonitorService extends Service {
     }
 
     private boolean handleLowBatteryAlert(int percent, boolean isPowerConnected, boolean isLowAlertSent) {
-        boolean isLow = percent <= 15;
+        boolean isLow = percent <= Battery.getLowBatteryThreshold(this);
         if (isLow && !isPowerConnected) {
             if (!isLowAlertSent) {
                 postAlertNotification(

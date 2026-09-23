@@ -156,6 +156,19 @@ public class Battery {
         return bitmap;
     }
 
+    public static double getDesignCapacity(Context context) {
+        try {
+            @SuppressLint("PrivateApi")
+            Class<?> powerProfileClass = Class.forName("com.android.internal.os.PowerProfile");
+            Object powerProfile = powerProfileClass.getConstructor(Context.class).newInstance(context);
+            Method getBatteryCapacity = powerProfileClass.getMethod("getAveragePower", String.class);
+            Double capacityDouble = (Double) getBatteryCapacity.invoke(powerProfile, "battery.capacity");
+            return capacityDouble != null && capacityDouble > 0 ? capacityDouble : -1;
+        } catch (Exception e) {
+            return  -1;
+        }
+    }
+
     public static int getBatteryRes(boolean charging, int per) {
         if (charging) {
             if (per >= 90) {
@@ -178,6 +191,14 @@ public class Battery {
         }
     }
 
+    public static int getDesignCapacityAsInt(Context context) {
+        return Utils.getInt("designCapacity", (int) Math.round(Battery.getDesignCapacity(context)), context);
+    }
+
+    public static int getLowBatteryThreshold(Context context) {
+        return Utils.getInt("battery_low_threshold", 15, context);
+    }
+
     public static long getCapacityMah(BatteryManager batteryManager, int level, int scale, long chargeCounter) {
         try {
             if (batteryManager != null && chargeCounter > 0 && level > 0 && scale > 0) {
@@ -187,19 +208,6 @@ public class Battery {
             }
         } catch (Exception ignored) {}
         return -1;
-    }
-
-    public static double getDesignCapacity(Context context) {
-        try {
-            @SuppressLint("PrivateApi")
-            Class<?> powerProfileClass = Class.forName("com.android.internal.os.PowerProfile");
-            Object powerProfile = powerProfileClass.getConstructor(Context.class).newInstance(context);
-            Method getBatteryCapacity = powerProfileClass.getMethod("getAveragePower", String.class);
-            Double capacityDouble = (Double) getBatteryCapacity.invoke(powerProfile, "battery.capacity");
-            return capacityDouble != null && capacityDouble > 0 ? capacityDouble : -1;
-        } catch (Exception e) {
-            return  -1;
-        }
     }
 
     public static int getProgressColor(int percentValue, Context context) {
